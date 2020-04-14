@@ -2,7 +2,6 @@ import Position from './Position';
 
 export const ACTOR_TYPE = 'actor';
 export const FIXTURE_TYPE = 'fixture';
-export const MEMBER_NAME = 'member';
 
 class Member {
   constructor(coordinates) {
@@ -22,7 +21,7 @@ class Member {
   }
 
   get classes() {
-    return `${MEMBER_NAME} ${this.type} ${this.name}`;
+    return `${this.type} ${this.name}`;
   }
 }
 
