@@ -16,5 +16,6 @@ module.exports = {
   },
   rules: {
     semi: ['error', 'always'],
+    'max-len': ['error', { 'code': 100 }],
   },
 };
