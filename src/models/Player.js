@@ -1,6 +1,6 @@
 import Member, { ACTOR_TYPE } from './Member';
 
-const PLAYER_NAME = 'player';
+export const PLAYER_NAME = 'player';
 
 class Player extends Member {
   constructor(coordinates) {
