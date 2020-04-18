@@ -21,6 +21,14 @@ class Member {
   isType(type) {
     return this.type === type;
   }
+
+  get positionX() {
+    return this.position.x;
+  }
+
+  get positionY() {
+    return this.position.y;
+  }
 }
 
 export default Member;
