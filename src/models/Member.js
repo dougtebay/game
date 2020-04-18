@@ -6,6 +6,8 @@ export const FIXTURE_TYPE = 'fixture';
 class Member {
   constructor(coordinates) {
     this.position = new Position(coordinates);
+    this.width = 1;
+    this.height = 1;
   }
 
   get isActor() {
