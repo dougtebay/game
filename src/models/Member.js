@@ -21,10 +21,6 @@ class Member {
   isType(type) {
     return this.type === type;
   }
-
-  get classes() {
-    return `${this.type} ${this.name}`;
-  }
 }
 
 export default Member;
