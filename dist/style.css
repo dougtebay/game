@@ -1,0 +1,19 @@
+.actor, .fixture {
+  position: absolute;
+}
+
+.actor {
+  z-index: 1;
+}
+
+.block {
+  background-color: gray;
+}
+
+.player {
+  background-color: black;
+}
+
+.space {
+  background-color: darkgray;
+}
