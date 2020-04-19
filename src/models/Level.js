@@ -2,27 +2,24 @@ import Block from './Block';
 import Player, { PLAYER_NAME } from './Player';
 import Space from './Space';
 
-const BLOCK_SYMBOL = '#';
-const PLAYER_SYMBOL = '@';
-const SPACE_SYMBOL = ' ';
-
-const LEVEL_PLAN = [
-  '           ',
-  ' #   @   # ',
-  ' ######### ',
-  '           ',
-];
-
-const LEVEL_MEMBERS_KEY = [
-  { symbol: BLOCK_SYMBOL, class: Block },
-  { symbol: PLAYER_SYMBOL, class: Player },
-  { symbol: SPACE_SYMBOL, class: Space },
-];
-
 class Level {
   constructor() {
-    this.plan = LEVEL_PLAN;
-    this.membersKey = LEVEL_MEMBERS_KEY;
+    this.blockSymbol = '#';
+    this.playerSymbol = '@';
+    this.spaceSymbol = ' ';
+
+    this.plan = [
+      '           ',
+      ' #   @   # ',
+      ' ######### ',
+      '           ',
+    ];
+
+    this.membersKey = [
+      { symbol: this.blockSymbol, class: Block },
+      { symbol: this.playerSymbol, class: Player },
+      { symbol: this.spaceSymbol, class: Space },
+    ];
   }
 
   get player() {
@@ -57,7 +54,7 @@ class Level {
   }
 
   createSpace(coordinates) {
-    return this.createMember(SPACE_SYMBOL, coordinates);
+    return this.createMember(this.spaceSymbol, coordinates);
   }
 }
 

@@ -1,21 +1,22 @@
 import Position from './Position';
 
-export const ACTOR_TYPE = 'actor';
-export const FIXTURE_TYPE = 'fixture';
-
 class Member {
   constructor(coordinates) {
     this.position = new Position(coordinates);
+
+    this.actorType = 'actor';
+    this.fixtureType = 'fixture';
+
     this.width = 1;
     this.height = 1;
   }
 
   get isActor() {
-    return this.isType(ACTOR_TYPE);
+    return this.isType(this.actorType);
   }
 
   get isFixture() {
-    return this.isType(FIXTURE_TYPE);
+    return this.isType(this.fixtureType);
   }
 
   isType(type) {

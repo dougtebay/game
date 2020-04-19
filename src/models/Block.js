@@ -1,12 +1,11 @@
-import Member, { FIXTURE_TYPE } from './Member';
-
-const BLOCK_NAME = 'block';
+import Member from './Member';
 
 class Block extends Member {
   constructor(coordinates) {
     super(coordinates);
-    this.type = FIXTURE_TYPE;
-    this.name = BLOCK_NAME;
+
+    this.type = this.fixtureType;
+    this.name = 'block';
   }
 }
 
