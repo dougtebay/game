@@ -8,6 +8,11 @@ class Player extends Member {
 
     this.type = this.actorType;
     this.name = PLAYER_NAME;
+    this.directions = { 'left': false, 'up': false, 'right': false };
+  }
+
+  setDirection(direction, isActive) {
+    this.directions[direction] = isActive;
   }
 }
 
