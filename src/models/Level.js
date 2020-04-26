@@ -15,22 +15,17 @@ class Level {
       '           ',
     ];
 
-    this.membersKey = [
+    this.membersMap = [
       { symbol: this.blockSymbol, class: Block },
       { symbol: this.playerSymbol, class: Player },
       { symbol: this.spaceSymbol, class: Space },
     ];
+
+    this.members = this.members();
+    this.player = this.player();
   }
 
-  get player() {
-    return this.members.find((member) => member.name === PLAYER_NAME);
-  }
-
-  get fixtures() {
-    return this.members.filter((member) => member.isFixture);
-  }
-
-  get members() {
+  members() {
     return this.grid.map((row, y) => row.reduce((members, symbol, x) => [
       ...members,
       ...this.createMembers(symbol, { x, y }),
@@ -48,13 +43,17 @@ class Level {
   }
 
   createMember(symbol, coordinates) {
-    const Member = this.membersKey.find((member) => member.symbol === symbol).class;
+    const Member = this.membersMap.find((member) => member.symbol === symbol).class;
 
     return new Member(coordinates);
   }
 
   createSpace(coordinates) {
     return this.createMember(this.spaceSymbol, coordinates);
+  }
+
+  player() {
+    return this.members.find((member) => member.name === PLAYER_NAME);
   }
 }
 
