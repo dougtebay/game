@@ -13,9 +13,12 @@ class Controller {
 
   handleEvent(event) {
     const direction = this.keyCodesMap[event.keyCode];
-    const isActive = event.type === 'keydown';
 
-    if (direction) this.player.setDirection(direction, isActive);
+    if (direction) {
+      const isActive = event.type === 'keydown';
+
+      this.player.setDirection(direction, isActive);
+    }
   }
 }
 
