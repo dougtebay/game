@@ -15,7 +15,8 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    'max-len': ['error', { code: 100 }],
+    'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['element'] }],
     semi: ['error', 'always'],
-    'max-len': ['error', { 'code': 100 }],
   },
 };

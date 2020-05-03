@@ -16,6 +16,10 @@ class Player extends Member {
     this.directions[direction] = isActive;
   }
 
+  get hasDirection() {
+    return Object.values(this.directions).some(Boolean);
+  }
+
   move() {
     if (this.directions.left) this.moveLeft();
     if (this.directions.right) this.moveRight();

@@ -57,7 +57,7 @@ class LevelView {
 
   animate() {
     const beforeRepaint = () => {
-      this.updatePlayerPosition();
+      if (this.player.hasDirection) this.updatePlayerPosition();
       requestAnimationFrame(beforeRepaint);
     };
 
