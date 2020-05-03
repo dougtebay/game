@@ -26,20 +26,15 @@ class Level {
   }
 
   members() {
-    return this.grid.map((row, y) => row.reduce((members, symbol, x) => [
-      ...members,
-      ...this.createMembers(symbol, { x, y }),
-    ], [])).flat();
+    return this.grid.map((row, y) => row.map((symbol, x) => {
+      const member = this.createMember(symbol, { x, y });
+
+      return member.isFixture ? member : [member, this.createSpace(member.position)];
+    })).flat(2);
   }
 
   get grid() {
     return this.plan.map((row) => row.split(''));
-  }
-
-  createMembers(symbol, coordinates) {
-    const member = this.createMember(symbol, coordinates);
-
-    return member.isFixture ? [member] : [member, this.createSpace(member.position)];
   }
 
   createMember(symbol, coordinates) {

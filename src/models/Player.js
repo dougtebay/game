@@ -20,6 +20,8 @@ class Player extends Member {
     if (this.directions.left) this.moveLeft();
     if (this.directions.right) this.moveRight();
     if (this.directions.up) this.moveUp();
+
+    return this;
   }
 
   moveLeft() {

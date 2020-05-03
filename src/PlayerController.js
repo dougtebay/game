@@ -1,4 +1,4 @@
-class Controller {
+class PlayerController {
   constructor(player) {
     this.player = player;
     this.keyCodesMap = { 37: 'left', 38: 'up', 39: 'right' };
@@ -22,4 +22,4 @@ class Controller {
   }
 }
 
-export default Controller;
+export default PlayerController;

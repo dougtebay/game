@@ -11,10 +11,6 @@ class Member {
     this.height = 1;
   }
 
-  get isActor() {
-    return this.isType(this.actorType);
-  }
-
   get isFixture() {
     return this.isType(this.fixtureType);
   }
