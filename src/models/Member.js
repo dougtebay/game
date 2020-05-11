@@ -1,8 +1,8 @@
-import Position from './Position';
+import Shape from './Shape';
 
-class Member {
+class Member extends Shape {
   constructor(coordinates) {
-    this.position = new Position(coordinates);
+    super(coordinates);
 
     this.actorType = 'actor';
     this.fixtureType = 'fixture';
@@ -17,14 +17,6 @@ class Member {
 
   isType(type) {
     return this.type === type;
-  }
-
-  get positionX() {
-    return this.position.x;
-  }
-
-  get positionY() {
-    return this.position.y;
   }
 }
 

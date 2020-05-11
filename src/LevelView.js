@@ -38,8 +38,8 @@ class LevelView {
   }
 
   setElementPosition(element, member) {
-    element.style.top = this.toScaleUnit(member.positionY);
-    element.style.left = this.toScaleUnit(member.positionX);
+    element.style.top = this.toScaleUnit(member.position.y * member.height);
+    element.style.left = this.toScaleUnit(member.position.x * member.width);
   }
 
   setElementDimensions(element, member) {
