@@ -6,6 +6,7 @@ class Space extends Member {
 
     this.type = this.fixtureType;
     this.name = 'space';
+    this.isObstacle = false;
   }
 }
 

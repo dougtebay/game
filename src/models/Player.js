@@ -10,6 +10,7 @@ class Player extends Member {
     this.type = this.actorType;
     this.name = PLAYER_NAME;
 
+    this.isObstacle = false;
     this.directions = { left: false, right: false, up: false };
     this.movementLength = this.width / 10;
   }

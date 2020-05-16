@@ -6,6 +6,7 @@ class Block extends Member {
 
     this.type = this.fixtureType;
     this.name = 'block';
+    this.isObstacle = true;
   }
 }
 
