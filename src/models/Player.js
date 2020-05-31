@@ -37,15 +37,27 @@ class Player extends Member {
   }
 
   moveLeft() {
-    this.position = this.position.minus({ x: this.movementLength });
+    this.position = this.nextPositionLeft();
   }
 
   moveRight() {
-    this.position = this.position.plus({ x: this.movementLength });
+    this.position = this.nextPositionRight();
   }
 
   moveUp() {
-    this.position = this.position.minus({ y: this.movementLength });
+    this.position = this.nextPositionUp();
+  }
+
+  nextPositionLeft() {
+    return this.position.subtract({ x: this.movementLength });
+  }
+
+  nextPositionRight() {
+    return this.position.add({ x: this.movementLength });
+  }
+
+  nextPositionUp() {
+    return this.position.subtract({ y: this.movementLength });
   }
 
   get rangeOfMotionLeft() {
