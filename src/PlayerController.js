@@ -1,7 +1,11 @@
+export const LEFT = 'left';
+export const UP = 'up';
+export const RIGHT = 'right';
+
 class PlayerController {
   constructor(player) {
     this.player = player;
-    this.keyCodesMap = { 37: 'left', 38: 'up', 39: 'right' };
+    this.keyCodesMap = { 37: LEFT, 38: UP, 39: RIGHT };
 
     this.addEventListeners();
   }
