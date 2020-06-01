@@ -1,6 +1,4 @@
-export const LEFT = 'left';
-export const UP = 'up';
-export const RIGHT = 'right';
+import { LEFT, RIGHT, UP } from './constants';
 
 class PlayerController {
   constructor(player) {

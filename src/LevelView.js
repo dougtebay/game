@@ -1,4 +1,4 @@
-import { PLAYER_NAME } from './models/Player';
+import { PLAYER_NAME } from './constants';
 
 class LevelView {
   constructor(level) {

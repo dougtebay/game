@@ -1,5 +1,6 @@
 import Block from './Block';
-import Player, { PLAYER_NAME } from './Player';
+import { PLAYER_NAME } from '../constants';
+import Player from './Player';
 import Space from './Space';
 
 class Level {
@@ -26,11 +27,11 @@ class Level {
   }
 
   members() {
-    return this.grid.map((row, y) => row.map((symbol, x) => {
+    return this.grid.flatMap((row, y) => row.flatMap((symbol, x) => {
       const member = this.createMember(symbol, { x, y });
 
       return member.isFixture ? member : [member, this.createSpace(member.position)];
-    })).flat(2);
+    }));
   }
 
   get grid() {
@@ -49,6 +50,14 @@ class Level {
 
   player() {
     return this.members.find((member) => member.name === PLAYER_NAME);
+  }
+
+  membersAt(coordinates) {
+    return this.members.filter((member) => member.isAt(coordinates));
+  }
+
+  obstaclesAt(coordinates) {
+    return this.membersAt(coordinates).filter((member) => member.isObstacle);
   }
 }
 

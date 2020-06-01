@@ -1,6 +1,5 @@
+import { PLAYER_NAME } from '../constants';
 import Member from './Member';
-
-export const PLAYER_NAME = 'player';
 
 class Player extends Member {
   constructor(coordinates) {
@@ -16,6 +15,10 @@ class Player extends Member {
 
   setDirection(direction, isActive) {
     this.directions[direction] = isActive;
+  }
+
+  get hasDirection() {
+    return Object.values(this.directions).some(Boolean);
   }
 
   hasDirection(direction) {
