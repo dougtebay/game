@@ -1,5 +1,5 @@
 import Block from './Block';
-import { PLAYER_NAME } from '../constants';
+import { LEFT, PLAYER_NAME, RIGHT } from '../constants';
 import Player from './Player';
 import Space from './Space';
 
@@ -52,12 +52,33 @@ class Level {
     return this.members.find((member) => member.name === PLAYER_NAME);
   }
 
-  membersAt(coordinates) {
-    return this.members.filter((member) => member.isAt(coordinates));
+  playerIsColliding() {
+    if (this.player.isBeingDirected(LEFT)) return this.playerIsCollidingOn(LEFT);
+    if (this.player.isBeingDirected(RIGHT)) return this.playerIsCollidingOn(RIGHT);
+
+    return false;
   }
 
-  obstaclesAt(coordinates) {
-    return this.membersAt(coordinates).filter((member) => member.isObstacle);
+  playerIsCollidingOn(side) {
+    const obstacle = this.obstacleOn(side, this.player.position);
+
+    if (!obstacle) return false;
+
+    return this.player.isCollidingWith(obstacle);
+  }
+
+  obstacleOn(side, position) {
+    const gridPosition = position.gridPositionTo(side);
+
+    return this.obstacleAt(gridPosition);
+  }
+
+  obstacleAt(position) {
+    return this.membersAt(position).find((member) => member.isObstacle);
+  }
+
+  membersAt(position) {
+    return this.members.filter((member) => member.isAt(position));
   }
 }
 

@@ -2,8 +2,9 @@ import { PLAYER_NAME } from './constants';
 
 class LevelView {
   constructor(level) {
-    this.members = level.members;
-    this.player = level.player;
+    this.level = level;
+    this.members = this.level.members;
+    this.player = this.level.player;
 
     this.playerName = PLAYER_NAME;
 
@@ -57,21 +58,26 @@ class LevelView {
 
   animate() {
     const beforeRepaint = () => {
-      if (this.player.hasDirection) this.updatePlayerPosition();
+      if (this.player.isBeingDirected) this.movePlayer();
+
       requestAnimationFrame(beforeRepaint);
     };
 
     requestAnimationFrame(beforeRepaint);
   }
 
+  movePlayer() {
+    this.player.move();
+
+    this.level.playerIsColliding() ? this.player.rebound() : this.updatePlayerPosition();
+  }
+
   updatePlayerPosition() {
-    this.setElementPosition(this.playerElement, this.player.move());
+    this.setElementPosition(this.playerElement, this.player);
   }
 
   get playerElement() {
-    const [player] = document.getElementsByClassName(this.playerName);
-
-    return player;
+    return document.getElementsByClassName(this.playerName)[0];
   }
 }
 

@@ -6,9 +6,6 @@ class Member extends Shape {
 
     this.actorType = 'actor';
     this.fixtureType = 'fixture';
-
-    this.width = 1;
-    this.height = 1;
   }
 
   get isFixture() {

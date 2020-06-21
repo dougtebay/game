@@ -1,8 +1,13 @@
+import { LEFT, RIGHT } from '../constants';
 import Position from './Position';
 
 class Shape {
   constructor(coordinates) {
     this.position = new Position(coordinates);
+    this.lastPosition;
+
+    this.width = this.constructor.width;
+    this.height = this.constructor.height;
   }
 
   get leftSide() {
@@ -21,9 +26,17 @@ class Shape {
     return this.position.y + this.height;
   }
 
-  isAt({ x, y }) {
-    return this.position.x === x && this.position.y === y;
+  isAt(position) {
+    return this.position.x === position.x && this.position.y === position.y;
+  }
+
+  overlapsOn(side, shape) {
+    if (side === LEFT) return this.leftSide < shape.rightSide;
+    if (side === RIGHT) return this.rightSide > shape.leftSide;
   }
 }
+
+Shape.width = 1;
+Shape.height = 1;
 
 export default Shape;

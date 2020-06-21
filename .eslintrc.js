@@ -18,6 +18,7 @@ module.exports = {
     'max-len': ['error', { code: 100 }],
     'no-dupe-class-members': 'off',
     'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['element'] }],
+    'no-unused-expressions': ['error', { 'allowTernary': true }],
     semi: ['error', 'always'],
   },
 };

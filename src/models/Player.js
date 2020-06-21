@@ -1,4 +1,4 @@
-import { PLAYER_NAME } from '../constants';
+import { LEFT, PLAYER_NAME, RIGHT } from '../constants';
 import Member from './Member';
 
 class Player extends Member {
@@ -9,7 +9,7 @@ class Player extends Member {
     this.name = PLAYER_NAME;
 
     this.isObstacle = false;
-    this.directions = { left: false, right: false, up: false };
+    this.directions = {};
     this.movementLength = this.width / 10;
   }
 
@@ -17,11 +17,11 @@ class Player extends Member {
     this.directions[direction] = isActive;
   }
 
-  get hasDirection() {
+  get isBeingDirected() {
     return Object.values(this.directions).some(Boolean);
   }
 
-  hasDirection(direction) {
+  isBeingDirected(direction) {
     return this.activeDirections.includes(direction);
   }
 
@@ -32,51 +32,34 @@ class Player extends Member {
   }
 
   move() {
-    if (this.directions.left) this.moveLeft();
-    if (this.directions.right) this.moveRight();
-    if (this.directions.up) this.moveUp();
+    if (this.isBeingDirected(LEFT)) this.moveTo(LEFT);
+    if (this.isBeingDirected(RIGHT)) this.moveTo(RIGHT);
 
     return this;
   }
 
-  moveLeft() {
-    this.position = this.nextPositionLeft();
+  moveTo(side) {
+    this.lastPosition = this.position;
+
+    this.position = this.nextPosition(side);
   }
 
-  moveRight() {
-    this.position = this.nextPositionRight();
+  nextPosition(side) {
+    if (side === LEFT) return this.position.subtract({ x: this.movementLength });
+    if (side === RIGHT) return this.position.add({ x: this.movementLength });
+
+    return this.position;
   }
 
-  moveUp() {
-    this.position = this.nextPositionUp();
+  isCollidingWith(obstacle) {
+    if (this.isBeingDirected(LEFT)) return this.overlapsOn(LEFT, obstacle);
+    if (this.isBeingDirected(RIGHT)) return this.overlapsOn(RIGHT, obstacle);
+
+    return false;
   }
 
-  nextPositionLeft() {
-    return this.position.subtract({ x: this.movementLength });
-  }
-
-  nextPositionRight() {
-    return this.position.add({ x: this.movementLength });
-  }
-
-  nextPositionUp() {
-    return this.position.subtract({ y: this.movementLength });
-  }
-
-  get rangeOfMotionLeft() {
-    return Math.floor(this.leftSide - this.movementLength);
-  }
-
-  get rangeOfMotionRight() {
-    return Math.floor(this.rightSide + this.movementLength);
-  }
-
-  get rangeOfMotionUp() {
-    return Math.floor(this.topSide - this.movementLength);
-  }
-
-  get rangeOfMotionDown() {
-    return Math.floor(this.bottomSide + this.movementLength);
+  rebound() {
+    this.position = this.lastPosition;
   }
 }
 
