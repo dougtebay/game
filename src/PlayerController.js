@@ -1,27 +1,27 @@
-import { LEFT, RIGHT, UP } from './constants';
+import { LEFT, RIGHT, UP } from './constants'
 
 class PlayerController {
-  constructor(player) {
-    this.player = player;
-    this.keyCodesMap = { 37: LEFT, 38: UP, 39: RIGHT };
+  constructor (player) {
+    this.player = player
+    this.keyCodesMap = { 37: LEFT, 38: UP, 39: RIGHT }
 
-    this.addEventListeners();
+    this.addEventListeners()
   }
 
-  addEventListeners() {
-    window.addEventListener('keydown', this.handleEvent.bind(this));
-    window.addEventListener('keyup', this.handleEvent.bind(this));
+  addEventListeners () {
+    window.addEventListener('keydown', this.handleEvent.bind(this))
+    window.addEventListener('keyup', this.handleEvent.bind(this))
   }
 
-  handleEvent(event) {
-    const direction = this.keyCodesMap[event.keyCode];
+  handleEvent (event) {
+    const direction = this.keyCodesMap[event.keyCode]
 
     if (direction) {
-      const isActive = event.type === 'keydown';
+      const isActive = event.type === 'keydown'
 
-      this.player.setDirection(direction, isActive);
+      this.player.setDirection(direction, isActive)
     }
   }
 }
 
-export default PlayerController;
+export default PlayerController

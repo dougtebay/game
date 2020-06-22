@@ -1,66 +1,66 @@
-import { LEFT, PLAYER_NAME, RIGHT } from '../constants';
-import Member from './Member';
+import { LEFT, PLAYER_NAME, RIGHT } from '../constants'
+import Member from './Member'
 
 class Player extends Member {
-  constructor(coordinates) {
-    super(coordinates);
+  constructor (coordinates) {
+    super(coordinates)
 
-    this.type = this.actorType;
-    this.name = PLAYER_NAME;
+    this.type = this.actorType
+    this.name = PLAYER_NAME
 
-    this.isObstacle = false;
-    this.directions = {};
-    this.movementLength = this.width / 10;
+    this.isObstacle = false
+    this.directions = {}
+    this.movementLength = this.width / 10
   }
 
-  setDirection(direction, isActive) {
-    this.directions[direction] = isActive;
+  setDirection (direction, isActive) {
+    this.directions[direction] = isActive
   }
 
-  get isBeingDirected() {
-    return Object.values(this.directions).some(Boolean);
+  get isBeingDirected () {
+    return Object.values(this.directions).some(Boolean)
   }
 
-  isBeingDirected(direction) {
-    return this.activeDirections.includes(direction);
+  isBeingDirectedTo (direction) {
+    return this.activeDirections.includes(direction)
   }
 
-  get activeDirections() {
+  get activeDirections () {
     return Object.entries(this.directions)
       .filter(([, isActive]) => isActive)
-      .map(([direction]) => direction);
+      .map(([direction]) => direction)
   }
 
-  move() {
-    if (this.isBeingDirected(LEFT)) this.moveTo(LEFT);
-    if (this.isBeingDirected(RIGHT)) this.moveTo(RIGHT);
+  move () {
+    if (this.isBeingDirectedTo(LEFT)) this.moveTo(LEFT)
+    if (this.isBeingDirectedTo(RIGHT)) this.moveTo(RIGHT)
 
-    return this;
+    return this
   }
 
-  moveTo(side) {
-    this.lastPosition = this.position;
+  moveTo (side) {
+    this.lastPosition = this.position
 
-    this.position = this.nextPosition(side);
+    this.position = this.nextPosition(side)
   }
 
-  nextPosition(side) {
-    if (side === LEFT) return this.position.subtract({ x: this.movementLength });
-    if (side === RIGHT) return this.position.add({ x: this.movementLength });
+  nextPosition (side) {
+    if (side === LEFT) return this.position.subtract({ x: this.movementLength })
+    if (side === RIGHT) return this.position.add({ x: this.movementLength })
 
-    return this.position;
+    return this.position
   }
 
-  isCollidingWith(obstacle) {
-    if (this.isBeingDirected(LEFT)) return this.overlapsOn(LEFT, obstacle);
-    if (this.isBeingDirected(RIGHT)) return this.overlapsOn(RIGHT, obstacle);
+  isCollidingWith (obstacle) {
+    if (this.isBeingDirectedTo(LEFT)) return this.overlapsOn(LEFT, obstacle)
+    if (this.isBeingDirectedTo(RIGHT)) return this.overlapsOn(RIGHT, obstacle)
 
-    return false;
+    return false
   }
 
-  rebound() {
-    this.position = this.lastPosition;
+  rebound () {
+    this.position = this.lastPosition
   }
 }
 
-export default Player;
+export default Player
