@@ -69,7 +69,9 @@ class LevelView {
   movePlayer () {
     this.player.move()
 
-    this.level.playerIsColliding() ? this.player.rebound() : this.updatePlayerPosition()
+    if (this.level.playerHasCollisions()) this.level.resolvePlayerCollisions()
+
+    this.updatePlayerPosition()
   }
 
   updatePlayerPosition () {

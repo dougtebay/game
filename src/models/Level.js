@@ -1,5 +1,5 @@
 import Block from './Block'
-import { LEFT, PLAYER_NAME, RIGHT } from '../constants'
+import { PLAYER_NAME } from '../constants'
 import Player from './Player'
 import Space from './Space'
 
@@ -52,25 +52,30 @@ class Level {
     return this.members.find((member) => member.name === PLAYER_NAME)
   }
 
-  playerIsColliding () {
-    if (this.player.isBeingDirectedTo(LEFT)) return this.playerIsCollidingOn(LEFT)
-    if (this.player.isBeingDirectedTo(RIGHT)) return this.playerIsCollidingOn(RIGHT)
+  playerHasCollisions () {
+    return Boolean(this.playerCollisions().length)
+  }
 
-    return false
+  playerCollisions () {
+    return this.sidesPlayerIsCollidingOn().map((side) => {
+      return { side, obstacle: this.obstacleOn(side, this.player.position) }
+    })
+  }
+
+  sidesPlayerIsCollidingOn () {
+    return this.player.activeDirections.filter((side) => this.playerIsCollidingOn(side))
   }
 
   playerIsCollidingOn (side) {
     const obstacle = this.obstacleOn(side, this.player.position)
 
-    if (!obstacle) return false
-
-    return this.player.isCollidingWith(obstacle)
+    return obstacle ? this.player.isCollidingWith(obstacle) : false
   }
 
   obstacleOn (side, position) {
-    const gridPosition = position.gridPositionTo(side)
+    const cellPosition = position.cellTo(side)
 
-    return this.obstacleAt(gridPosition)
+    return this.obstacleAt(cellPosition)
   }
 
   obstacleAt (position) {
@@ -79,6 +84,10 @@ class Level {
 
   membersAt (position) {
     return this.members.filter((member) => member.isAt(position))
+  }
+
+  resolvePlayerCollisions () {
+    return this.playerCollisions().forEach((collision) => this.player.reboundFrom(collision))
   }
 }
 

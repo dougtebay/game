@@ -1,5 +1,6 @@
 import { LEFT, PLAYER_NAME, RIGHT } from '../constants'
 import Member from './Member'
+import Position from './Position'
 
 class Player extends Member {
   constructor (coordinates) {
@@ -10,7 +11,7 @@ class Player extends Member {
 
     this.isObstacle = false
     this.directions = {}
-    this.movementLength = this.width / 10
+    this.movementLength = this.width / 5
   }
 
   setDirection (direction, isActive) {
@@ -32,15 +33,10 @@ class Player extends Member {
   }
 
   move () {
-    if (this.isBeingDirectedTo(LEFT)) this.moveTo(LEFT)
-    if (this.isBeingDirectedTo(RIGHT)) this.moveTo(RIGHT)
-
-    return this
+    this.activeDirections.forEach((side) => this.moveTo(side))
   }
 
   moveTo (side) {
-    this.lastPosition = this.position
-
     this.position = this.nextPosition(side)
   }
 
@@ -52,14 +48,22 @@ class Player extends Member {
   }
 
   isCollidingWith (obstacle) {
-    if (this.isBeingDirectedTo(LEFT)) return this.overlapsOn(LEFT, obstacle)
-    if (this.isBeingDirectedTo(RIGHT)) return this.overlapsOn(RIGHT, obstacle)
-
-    return false
+    return this.activeDirections.some((side) => this.overlapsOn(side, obstacle))
   }
 
-  rebound () {
-    this.position = this.lastPosition
+  reboundFrom (collision) {
+    this.position = this.reboundPosition(collision)
+  }
+
+  reboundPosition (collision) {
+    return new Position({ x: this.reboundPositionX(collision), y: this.position.y })
+  }
+
+  reboundPositionX (collision) {
+    if (collision.side === LEFT) return collision.obstacle.rightSide
+    if (collision.side === RIGHT) return collision.obstacle.leftSide - this.width
+
+    return this.position.x
   }
 }
 

@@ -4,7 +4,6 @@ import Position from './Position'
 class Shape {
   constructor (coordinates) {
     this.position = new Position(coordinates)
-    this.lastPosition = null
 
     this.width = this.constructor.width
     this.height = this.constructor.height
