@@ -1,4 +1,4 @@
-import { LEFT, RIGHT } from '../constants'
+import { DOWN, LEFT, RIGHT } from '../constants'
 import Position from './Position'
 
 class Shape {
@@ -30,6 +30,7 @@ class Shape {
   }
 
   overlapsOn (side, shape) {
+    if (side === DOWN) return this.bottomSide > shape.topSide
     if (side === LEFT) return this.leftSide < shape.rightSide
     if (side === RIGHT) return this.rightSide > shape.leftSide
   }

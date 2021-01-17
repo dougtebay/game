@@ -1,4 +1,4 @@
-import { LEFT, RIGHT } from '../constants'
+import { DOWN, LEFT, RIGHT } from '../constants'
 
 class Position {
   constructor ({ x, y }) {
@@ -14,6 +14,7 @@ class Position {
   }
 
   cellTo (side) {
+    if (side === DOWN) return new Position({ x: this.x, y: Math.ceil(this.y) })
     if (side === LEFT) return new Position({ x: Math.floor(this.x), y: this.y })
     if (side === RIGHT) return new Position({ x: Math.ceil(this.x), y: this.y })
 

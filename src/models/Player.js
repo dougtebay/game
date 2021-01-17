@@ -75,7 +75,10 @@ class Player extends Member {
   }
 
   reboundPosition (collision) {
-    return new Position({ x: this.reboundPositionX(collision), y: this.position.y })
+    return new Position({
+      x: this.reboundPositionX(collision),
+      y: this.reboundPositionY(collision)
+    })
   }
 
   reboundPositionX (collision) {
@@ -83,6 +86,12 @@ class Player extends Member {
     if (collision.side === RIGHT) return collision.obstacle.leftSide - this.width
 
     return this.position.x
+  }
+
+  reboundPositionY (collision) {
+    if (collision.side === DOWN) return collision.obstacle.topSide - this.width
+
+    return this.position.y
   }
 }
 
