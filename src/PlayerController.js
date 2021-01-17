@@ -19,7 +19,7 @@ class PlayerController {
     if (direction) {
       const isActive = event.type === 'keydown'
 
-      this.player.setDirection(direction, isActive)
+      this.player.toggleDirection(direction, isActive)
     }
   }
 }

@@ -53,7 +53,7 @@ class Level {
   }
 
   exertGravitationalForce () {
-    this.player.setDirection(DOWN, true)
+    this.player.addDirection(DOWN)
   }
 
   playerHasCollisions () {
@@ -67,7 +67,7 @@ class Level {
   }
 
   sidesPlayerIsCollidingOn () {
-    return this.player.activeDirections.filter((side) => this.playerIsCollidingOn(side))
+    return this.player.directions.filter((side) => this.playerIsCollidingOn(side))
   }
 
   playerIsCollidingOn (side) {

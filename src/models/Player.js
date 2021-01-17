@@ -10,30 +10,48 @@ class Player extends Member {
     this.name = PLAYER_NAME
 
     this.isObstacle = false
-    this.directions = {}
+    this.directions = []
     this.movementLength = this.width / 5
   }
 
-  setDirection (direction, isActive) {
-    this.directions[direction] = isActive
+  toggleDirection (direction, isActive) {
+    isActive ? this.addDirection(direction) : this.removeDirection(direction)
+  }
+
+  addDirection (direction) {
+    if (!this.directionIsSet(direction)) this.setDirection(direction)
+  }
+
+  removeDirection (direction) {
+    if (this.directionIsSet(direction)) this.unsetDirection(direction)
+  }
+
+  directionIsSet (direction) {
+    return this.indexOfDirection(direction) > -1
+  }
+
+  setDirection (direction) {
+    this.directions.push(direction)
+  }
+
+  unsetDirection (direction) {
+    this.directions.splice(this.indexOfDirection(direction), 1)
+  }
+
+  indexOfDirection (direction) {
+    return this.directions.indexOf(direction)
   }
 
   get isBeingDirected () {
-    return Object.values(this.directions).some(Boolean)
+    return Boolean(this.directions.length)
   }
 
   isBeingDirectedTo (direction) {
-    return this.activeDirections.includes(direction)
-  }
-
-  get activeDirections () {
-    return Object.entries(this.directions)
-      .filter(([, isActive]) => isActive)
-      .map(([direction]) => direction)
+    return this.directions.includes(direction)
   }
 
   move () {
-    this.activeDirections.forEach((side) => this.moveTo(side))
+    this.directions.forEach((side) => this.moveTo(side))
   }
 
   moveTo (side) {
@@ -49,7 +67,7 @@ class Player extends Member {
   }
 
   isCollidingWith (obstacle) {
-    return this.activeDirections.some((side) => this.overlapsOn(side, obstacle))
+    return this.directions.some((side) => this.overlapsOn(side, obstacle))
   }
 
   reboundFrom (collision) {
