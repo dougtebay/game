@@ -1,4 +1,4 @@
-import { LEFT, PLAYER_NAME, RIGHT } from '../constants'
+import { DOWN, LEFT, PLAYER_NAME, RIGHT } from '../constants'
 import Member from './Member'
 import Position from './Position'
 
@@ -41,6 +41,7 @@ class Player extends Member {
   }
 
   nextPosition (side) {
+    if (side === DOWN) return this.position.add({ y: this.movementLength })
     if (side === LEFT) return this.position.subtract({ x: this.movementLength })
     if (side === RIGHT) return this.position.add({ x: this.movementLength })
 

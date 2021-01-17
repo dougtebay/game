@@ -1,5 +1,5 @@
 import Block from './Block'
-import { PLAYER_NAME } from '../constants'
+import { DOWN, PLAYER_NAME } from '../constants'
 import Player from './Player'
 import Space from './Space'
 
@@ -50,6 +50,10 @@ class Level {
 
   player () {
     return this.members.find((member) => member.name === PLAYER_NAME)
+  }
+
+  exertGravitationalForce () {
+    this.player.setDirection(DOWN, true)
   }
 
   playerHasCollisions () {
