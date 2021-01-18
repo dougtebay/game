@@ -77,9 +77,19 @@ class Level {
   }
 
   obstacleOn (side, position) {
-    const cellPosition = position.cellTo(side)
+    const positions = position.positionsTo(side)
 
-    return this.obstacleAt(cellPosition)
+    return this.obstaclesAt(positions)[0]
+  }
+
+  obstaclesAt (positions) {
+    return positions.reduce((obstacles, position) => {
+      const obstacle = this.obstacleAt(position)
+
+      if (obstacle) obstacles.push(obstacle)
+
+      return obstacles
+    }, [])
   }
 
   obstacleAt (position) {

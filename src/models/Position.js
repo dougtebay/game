@@ -13,12 +13,27 @@ class Position {
     return new Position({ x: this.x - x, y: this.y - y })
   }
 
-  cellTo (side) {
-    if (side === DOWN) return new Position({ x: this.x, y: Math.ceil(this.y) })
-    if (side === LEFT) return new Position({ x: Math.floor(this.x), y: this.y })
-    if (side === RIGHT) return new Position({ x: Math.ceil(this.x), y: this.y })
+  positionsTo (side) {
+    if (side === DOWN) return this.positionsDown
+    if (side === LEFT) return this.positionsLeft
+    if (side === RIGHT) return this.positionsRight
 
-    return this
+    return [this]
+  }
+
+  get positionsDown () {
+    return [
+      new Position({ x: Math.floor(this.x), y: Math.ceil(this.y) }),
+      new Position({ x: Math.ceil(this.x), y: Math.ceil(this.y) })
+    ]
+  }
+
+  get positionsLeft () {
+    return [new Position({ x: Math.floor(this.x), y: this.y })]
+  }
+
+  get positionsRight () {
+    return [new Position({ x: Math.ceil(this.x), y: this.y })]
   }
 }
 
