@@ -29,11 +29,11 @@ class Position {
   }
 
   get positionsLeft () {
-    return [new Position({ x: Math.floor(this.x), y: this.y })]
+    return [new Position({ x: Math.floor(this.x), y: Math.floor(this.y) })]
   }
 
   get positionsRight () {
-    return [new Position({ x: Math.ceil(this.x), y: this.y })]
+    return [new Position({ x: Math.ceil(this.x), y: Math.floor(this.y) })]
   }
 }
 
