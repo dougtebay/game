@@ -51,7 +51,7 @@ class Player extends Member {
   }
 
   move () {
-    this.directions.forEach((side) => this.moveTo(side))
+    this.directions.forEach(side => this.moveTo(side))
   }
 
   moveTo (side) {
@@ -67,7 +67,7 @@ class Player extends Member {
   }
 
   isCollidingWith (obstacle) {
-    return this.directions.some((side) => this.overlapsOn(side, obstacle))
+    return this.directions.some(side => this.overlapsOn(side, obstacle))
   }
 
   reboundFrom (collision) {

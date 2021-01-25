@@ -35,11 +35,11 @@ class Level {
   }
 
   get grid () {
-    return this.plan.map((row) => row.split(''))
+    return this.plan.map(row => row.split(''))
   }
 
   createMember (symbol, coordinates) {
-    const Member = this.membersMap.find((member) => member.symbol === symbol).class
+    const Member = this.membersMap.find(member => member.symbol === symbol).class
 
     return new Member(coordinates)
   }
@@ -49,7 +49,7 @@ class Level {
   }
 
   player () {
-    return this.members.find((member) => member.name === PLAYER_NAME)
+    return this.members.find(member => member.name === PLAYER_NAME)
   }
 
   exertGravitationalForce () {
@@ -61,13 +61,13 @@ class Level {
   }
 
   playerCollisions () {
-    return this.sidesPlayerIsCollidingOn().map((side) => {
+    return this.sidesPlayerIsCollidingOn().map(side => {
       return { side, obstacle: this.obstacleOn(side, this.player.position) }
     })
   }
 
   sidesPlayerIsCollidingOn () {
-    return this.player.directions.filter((side) => this.playerIsCollidingOn(side))
+    return this.player.directions.filter(side => this.playerIsCollidingOn(side))
   }
 
   playerIsCollidingOn (side) {
@@ -93,15 +93,15 @@ class Level {
   }
 
   obstacleAt (position) {
-    return this.membersAt(position).find((member) => member.isObstacle)
+    return this.membersAt(position).find(member => member.isObstacle)
   }
 
   membersAt (position) {
-    return this.members.filter((member) => member.isAt(position))
+    return this.members.filter(member => member.isAt(position))
   }
 
   resolvePlayerCollisions () {
-    return this.playerCollisions().forEach((collision) => this.player.reboundFrom(collision))
+    return this.playerCollisions().forEach(collision => this.player.reboundFrom(collision))
   }
 }
 

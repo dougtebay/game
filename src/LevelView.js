@@ -18,7 +18,7 @@ class LevelView {
   }
 
   render () {
-    this.members.forEach((member) => {
+    this.members.forEach(member => {
       const element = this.createElement(member)
 
       this.styleElement(element, member)
