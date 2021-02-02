@@ -59,11 +59,23 @@ class Player extends Member {
   }
 
   nextPosition (side) {
-    if (side === DOWN) return this.position.add({ y: this.movementLength })
-    if (side === LEFT) return this.position.subtract({ x: this.movementLength })
-    if (side === RIGHT) return this.position.add({ x: this.movementLength })
+    if (side === DOWN) return this.moveDown()
+    if (side === LEFT) return this.moveLeft()
+    if (side === RIGHT) return this.moveRight()
 
     return this.position
+  }
+
+  moveDown () {
+    return this.position.add({ y: this.movementLength })
+  }
+
+  moveLeft () {
+    return this.position.subtract({ x: this.movementLength })
+  }
+
+  moveRight () {
+    return this.position.add({ x: this.movementLength })
   }
 
   isCollidingWith (obstacle) {
