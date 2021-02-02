@@ -1,6 +1,7 @@
 import { DOWN, LEFT, PLAYER_NAME, RIGHT } from '../constants'
 import Member from './Member'
 import Position from './Position'
+import { capitalize } from '../utilities'
 
 class Player extends Member {
   constructor (coordinates) {
@@ -59,11 +60,7 @@ class Player extends Member {
   }
 
   nextPosition (side) {
-    if (side === DOWN) return this.moveDown()
-    if (side === LEFT) return this.moveLeft()
-    if (side === RIGHT) return this.moveRight()
-
-    return this.position
+    return this[`move${capitalize(side)}`]()
   }
 
   moveDown () {
