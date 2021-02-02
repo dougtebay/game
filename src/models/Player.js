@@ -11,8 +11,10 @@ class Player extends Member {
     this.name = PLAYER_NAME
 
     this.isObstacle = false
+    this.isJumping = false
     this.directions = []
-    this.movementLength = this.width / 5
+    this.movementWidth = 0.2
+    this.movementHeight = 2
   }
 
   toggleDirection (direction, isActive) {
@@ -64,15 +66,23 @@ class Player extends Member {
   }
 
   moveDown () {
-    return this.position.add({ y: this.movementLength })
+    return this.position.add({ y: this.movementWidth })
   }
 
   moveLeft () {
-    return this.position.subtract({ x: this.movementLength })
+    return this.position.subtract({ x: this.movementWidth })
   }
 
   moveRight () {
-    return this.position.add({ x: this.movementLength })
+    return this.position.add({ x: this.movementWidth })
+  }
+
+  moveUp () {
+    if (this.isJumping) return this.position
+
+    this.isJumping = true
+
+    return this.position.subtract({ y: this.movementHeight })
   }
 
   isCollidingWith (obstacle) {
@@ -98,7 +108,11 @@ class Player extends Member {
   }
 
   reboundPositionY (collision) {
-    if (collision.side === DOWN) return collision.obstacle.topSide - this.width
+    if (collision.side === DOWN) {
+      this.isJumping = false
+
+      return collision.obstacle.topSide - this.width
+    }
 
     return this.position.y
   }
