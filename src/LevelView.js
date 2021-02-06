@@ -60,7 +60,7 @@ class LevelView {
     const beforeRepaint = () => {
       this.level.exertGravitationalForce()
 
-      if (this.player.isBeingDirected) this.movePlayer()
+      this.movePlayer()
 
       window.requestAnimationFrame(beforeRepaint)
     }

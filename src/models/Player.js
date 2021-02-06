@@ -1,4 +1,4 @@
-import { DOWN, LEFT, PLAYER_NAME, RIGHT } from '../constants'
+import { DIRECTIONS, DOWN, LEFT, PLAYER_NAME, RIGHT, UP } from '../constants'
 import Member from './Member'
 import Position from './Position'
 import { capitalize } from '../utilities'
@@ -11,10 +11,11 @@ class Player extends Member {
     this.name = PLAYER_NAME
 
     this.isObstacle = false
-    this.isJumping = false
     this.directions = []
-    this.movementWidth = 0.2
-    this.movementHeight = 2
+    this.movementLength = 0.3
+    this.minimumVerticalSpeed = 0
+    this.maximumVerticalSpeed = 8
+    this.verticalSpeed = 0
   }
 
   toggleDirection (direction, isActive) {
@@ -30,7 +31,7 @@ class Player extends Member {
   }
 
   directionIsSet (direction) {
-    return this.indexOfDirection(direction) > -1
+    return this.directions.includes(direction)
   }
 
   setDirection (direction) {
@@ -38,23 +39,11 @@ class Player extends Member {
   }
 
   unsetDirection (direction) {
-    this.directions.splice(this.indexOfDirection(direction), 1)
-  }
-
-  indexOfDirection (direction) {
-    return this.directions.indexOf(direction)
-  }
-
-  get isBeingDirected () {
-    return Boolean(this.directions.length)
-  }
-
-  isBeingDirectedTo (direction) {
-    return this.directions.includes(direction)
+    this.directions.splice(this.directions.indexOf(direction), 1)
   }
 
   move () {
-    this.directions.forEach(side => this.moveTo(side))
+    DIRECTIONS.forEach(side => this.moveTo(side))
   }
 
   moveTo (side) {
@@ -65,24 +54,62 @@ class Player extends Member {
     return this[`move${capitalize(side)}`]()
   }
 
+  moveUp () {
+    if (this.isBeingDirected(UP) && this.isVerticallyStationary) {
+      this.verticalSpeed = this.maximumVerticalSpeed
+    }
+
+    if (this.isAscending) return this.moveVertically()
+
+    return this.position
+  }
+
   moveDown () {
-    return this.position.add({ y: this.movementWidth })
+    if (this.isBeingDirected(DOWN) && this.isVerticallyStationary) {
+      this.verticalSpeed = -this.maximumVerticalSpeed
+    }
+
+    if (this.isDescending) return this.moveVertically()
+
+    return this.position
   }
 
   moveLeft () {
-    return this.position.subtract({ x: this.movementWidth })
+    if (!this.isBeingDirected(LEFT)) return this.position
+
+    return this.position.subtract({ x: this.movementLength })
   }
 
   moveRight () {
-    return this.position.add({ x: this.movementWidth })
+    if (!this.isBeingDirected(RIGHT)) return this.position
+
+    return this.position.add({ x: this.movementLength })
   }
 
-  moveUp () {
-    if (this.isJumping) return this.position
+  isBeingDirected (direction) {
+    return this.directionIsSet(direction)
+  }
 
-    this.isJumping = true
+  get isVerticallyStationary () {
+    return !this.isAscending && !this.isDescending
+  }
 
-    return this.position.subtract({ y: this.movementHeight })
+  get isAscending () {
+    return this.verticalSpeed > this.minimumVerticalSpeed
+  }
+
+  get isDescending () {
+    return this.verticalSpeed < this.minimumVerticalSpeed
+  }
+
+  moveVertically () {
+    this.verticalSpeed -= this.movementLength
+
+    return this.position.subtract({ y: this.verticalMovementLength })
+  }
+
+  get verticalMovementLength () {
+    return this.verticalSpeed / 30
   }
 
   isCollidingWith (obstacle) {
@@ -109,7 +136,7 @@ class Player extends Member {
 
   reboundPositionY (collision) {
     if (collision.side === DOWN) {
-      this.isJumping = false
+      this.verticalSpeed = this.minimumVerticalSpeed
 
       return collision.obstacle.topSide - this.width
     }
