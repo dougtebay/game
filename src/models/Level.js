@@ -1,5 +1,5 @@
 import Block from './Block'
-import { DOWN, PLAYER_NAME } from '../constants'
+import { DIRECTIONS, DOWN, PLAYER_NAME } from '../constants'
 import Player from './Player'
 import Space from './Space'
 
@@ -70,7 +70,7 @@ class Level {
   }
 
   sidesPlayerIsCollidingOn () {
-    return this.player.directions.filter(side => this.playerIsCollidingOn(side))
+    return DIRECTIONS.filter(side => this.playerIsCollidingOn(side))
   }
 
   playerIsCollidingOn (side) {
@@ -104,7 +104,11 @@ class Level {
   }
 
   resolvePlayerCollisions () {
-    return this.playerCollisions().forEach(collision => this.player.reboundFrom(collision))
+    if (this.playerHasCollisions()) {
+      this.player.reboundFrom(this.playerCollisions()[0])
+
+      this.resolvePlayerCollisions()
+    }
   }
 }
 
